@@ -1,0 +1,29 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.env
+
+# React (Vite o Create React App)
+dist/
+build/
+.vite/
+*.log
+
+# VS Code
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Linux
+*.swp
+
+# Tests / coverage
+coverage/
+
+# Mongo dump / temp
+dump/
+tmp/
+*.pid
