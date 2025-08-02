@@ -2,6 +2,9 @@ import { connect } from './data/index.js'
 import express from 'express'
 import cors from 'cors'
 
+import { usersRouter } from './routes/usersRouter.js'
+import { errorHandler } from './middlewares/errorHandler.js'
+
 const { MONGO_URL_DEV, PORT } = process.env
 
 connect(MONGO_URL_DEV)
@@ -13,6 +16,10 @@ connect(MONGO_URL_DEV)
         api.get('/hello', (request, response) => {
             response.send('Hello! 👋')
         })
+
+        api.use('/users', usersRouter)
+
+        api.use(errorHandler)
 
         api.listen(PORT, () => console.log('API listening on port ' + PORT))
     })
