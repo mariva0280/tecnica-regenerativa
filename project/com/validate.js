@@ -28,5 +28,11 @@ export const validate = {
     userId(userId) {
         if (typeof userId !== 'string') throw new ValidationError('Invalid userId type.')
         if (userId.length !== 24) throw new ValidationError('Invalid userId length.')
+    },
+
+    code(code) {
+        if (typeof code !== 'string') throw new ValidationError('Invalid code type')
+        if (code.length < 4) throw new ValidationError('Invalid code min length')
+        if (code.length > 12) throw new ValidationError('Invalid code max length')        
     }
 }
