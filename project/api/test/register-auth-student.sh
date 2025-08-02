@@ -1,0 +1,1 @@
+curl -X POST -H 'Content-Type: application/json' -d '{"email":"vanessa@fdez.com","code":"ABC123"}' http://localhost:8080/auth-students -v
