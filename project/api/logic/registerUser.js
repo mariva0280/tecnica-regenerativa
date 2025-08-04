@@ -19,14 +19,14 @@ export const registerUser = (name, email, username, password, code) => {
                 .catch(error => { throw new SystemError(error.message) })
                 .then(hash => {
                     return User.create({ name, email, username, password: hash, verified: true})
+                        .catch(error => {
+                            if (error.code === 11000) throw new DuplicityError('Email or username already exists')
+                            throw new SystemError('mongo error')
+                        })
                         .then(() => {
                             authStudent.used = true
                             return authStudent.save()
                         })
                 })
-        })
-        .catch(error => {
-            if (error.code === 11000) throw new DuplicityError('Email or username already exists')
-            throw new SystemError('mongo error')
         })
 }

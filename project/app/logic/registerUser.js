@@ -24,6 +24,7 @@ export const registerUser = (name, email, username, password, code) => {
             return response.json()
                 .catch(error => { throw new SystemError('json error')})
                 .then(body => {
+                    console.log('BODY:', body)
                     const { error, message } = body
 
                     const constructor = errors[error] || SystemError
