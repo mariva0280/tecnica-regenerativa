@@ -3,6 +3,7 @@ import { validate, SystemError, DuplicityError } from 'com'
 
 export const registerAuthStudent = (email, code) => {
     validate.email(email)
+    validate.code(code)
 
     if (code) {
         validate.code(code)
