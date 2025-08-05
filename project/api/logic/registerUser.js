@@ -8,6 +8,7 @@ export const registerUser = (name, email, username, password, code) => {
     validate.email(email)
     validate.username(username)
     validate.password(password)
+    validate.code(code)
 
     //Buscar si el alumno está autorizado
     return AuthStudent.findOne({ email, code })

@@ -3,13 +3,9 @@ import { validate, SystemError, DuplicityError } from 'com'
 
 export const registerAuthStudent = (email, code) => {
     validate.email(email)
-    validate.code(code)
 
-    if (code) {
-        validate.code(code)
-    } else {
-        code = Math.random().toString(36).substring(2, 8).toUpperCase()
-    }
+    const code = Math.random().toString(36).substring(2, 8).toUpperCase()
+    
 
     return AuthStudent.create({ email, code, used: false })
         .catch(error => {
