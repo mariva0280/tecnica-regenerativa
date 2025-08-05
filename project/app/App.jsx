@@ -3,6 +3,7 @@ import { Routes, Route, useNavigate, Navigate } from 'react-router'
 
 import { Landing } from './view/Landing'
 import { Register } from './view/Register'
+import { Login } from './view/Login'
 import { Home } from './view/Home'
 import { Alert } from './view/components/Alert'
 import { Confirm } from './view/components/Confirm'
@@ -88,6 +89,16 @@ export const App = () => {
                 />
                 :
                 <Navigate to='/' />    
+            } />
+
+            <Route path='/login' element={
+                !loggedIn ?
+                    <Login
+                       onRegisterClicked={handleRegisterClicked} 
+                       onUserLoggedIn={handleUserLoggedIn}
+                    />
+                    :
+                    <Navigate to='/' />
             } />
         </Routes>
     </Context.Provider>

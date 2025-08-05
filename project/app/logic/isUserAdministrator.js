@@ -2,9 +2,13 @@ import { getPayloadFromToken } from './helper/getPayloadFromToken'
 import { data } from '../data'
 
 export const isUserAdministrator = () => {
-    const payload = getPayloadFromToken(data.getToken())
+    try {
+        const payload = getPayloadFromToken(data.getToken())
 
-    const { role } = payload
+        const { role } = payload
 
-    return role === 'admin'
+        return role === 'admin'
+    } catch {
+        return false
+    }
 }
