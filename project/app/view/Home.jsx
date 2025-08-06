@@ -20,7 +20,7 @@ export const Home = ({ onUserLoggedOut }) => {
                     setUsername(username)
 
                     if (logic.isUserAdministrator())
-                        navigate('/adminPanel')
+                        navigate('/admin-panel')
                 })
                 .catch (error => {
                     console.error(error)
