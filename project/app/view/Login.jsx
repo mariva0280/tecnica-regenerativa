@@ -10,6 +10,7 @@ export const Login = ({ onRegisterClicked, onUserLoggedIn }) => {
     const handleRegisterClick = () => onRegisterClicked()
 
     const handleLoginSubmit = event => {
+        event.preventDefault()
 
         const form = event.target
 
@@ -29,7 +30,7 @@ export const Login = ({ onRegisterClicked, onUserLoggedIn }) => {
                     alert(error.message)
                 })
         } catch (error) {
-            console.error
+            console.error(error)
 
             alert(error.message)
         }

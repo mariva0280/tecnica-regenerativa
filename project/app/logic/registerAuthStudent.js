@@ -1,15 +1,15 @@
 import { validate, SystemError, errors } from 'com'
 
-export const registerAuthStudent = (email, code) => {
+export const registerAuthStudent = (email) => {
     validate.email(email)
-    validate.code(code)
+
 
     return fetch(import.meta.env.VITE_API_URL + '/auth-students', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ email, code })
+        body: JSON.stringify({ email })
     })
         .catch(error => { throw new SystemError('connection error') })
         .then(response => {

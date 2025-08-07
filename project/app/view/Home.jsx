@@ -2,9 +2,10 @@ import { useEffect, useState } from 'react'
 import { Routes, Route, useNavigate } from 'react-router'
 
 import { logic } from '../logic'
+import { useContext } from '../context'
 
 import { AdminPanel } from './components/AdminPanel'
-import { useContext } from '../context'
+import { CreateAuthStudent } from './components/CreateAuthStudent'
 
 export const Home = ({ onUserLoggedOut }) => {
     const navigate = useNavigate()
@@ -44,11 +45,11 @@ export const Home = ({ onUserLoggedOut }) => {
         }
     }
 
-    const handleCreateAuthStudentClick = () => navigate('/create-auth-student')
+    //const handleCreateAuthStudentClick = () => navigate('/admin-panel')
 
     const handleCreateAuthStudentCancelClicked = () => navigate('/admin-panel')
 
-    const handleAuthStudentCreated = () => navigate('/auth-students')
+    const handleAuthStudentCreated = () => navigate('/admin-panel')
 
     console.log('Home -> render')
 
@@ -61,22 +62,16 @@ export const Home = ({ onUserLoggedOut }) => {
             <button
                 className="bg-black text-white px-2 mx-1"
                 type="button"
-                onClick={handleCreateAuthStudentClick}
-            >+</button>
-
-            <button
-                className="bg-black text-white px-2 mx-1"
-                type="button"
                 onClick={handleLogoutClick}
             >Logout</button>
         </div>
 
         <Routes>
-            <Route path="/auth-students" element={<Posts alert={alert} confirm={confirm} />} />
+            <Route path="/admin-panel" element={<AdminPanel />} />
 
-            <Route path="/create-auth-student" element={<AdminPanel
+            <Route path="/create-auth-student" element={<CreateAuthStudent
                 onCancelClicked={handleCreateAuthStudentCancelClicked}
-                onPostCreated={handleAuthStudentCreated}
+                onAuthStudentCreated={handleAuthStudentCreated}
             />} />
         </Routes>
     </div>

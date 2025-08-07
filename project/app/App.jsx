@@ -28,16 +28,18 @@ export const App = () => {
 
     const handleUserLoggedOut = () => navigate('/login')
 
-    let loggedIn 
+    let loggedIn
+        try {
+            loggedIn = logic.isUserLoggedIn()
+        } catch (error) {
+            console.error(error)
 
-    try {
-        loggedIn = logic.isUserLoggedIn()
-    } catch(error) {
-        console.error (error)
+            alert(error.message)
+        }
 
-        alert(error.message)
-    }
+    
 
+    
     const handleAlertAccepted = () => setAlertMessage('')
 
     const handleAcceptConfirm = () => {
