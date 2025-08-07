@@ -1,7 +1,7 @@
 import { useContext } from '../../context'
 import { logic } from '../../logic'
 
-export const CreateAuthStudent = ({ onCancelCliked, onAuthStudentCreated }) => {
+export const CreateAuthStudent = ({ onCancelClicked, onAuthStudentCreated }) => {
     const { alert } = useContext()
 
     const handleAuthStudentSubmit = event => {
@@ -50,7 +50,7 @@ export const CreateAuthStudent = ({ onCancelCliked, onAuthStudentCreated }) => {
                 <div className="flex gap-2">
                     <button className="bg-black text-white px-4 py-2" type="submit">Autorizar</button>
 
-                    <button className="bg-gray-400 text-black px-4 py-2" type="button" onClick={onCancelCliked}>Cancelar</button>
+                    <button className="bg-gray-400 text-black px-4 py-2" type="button" onClick={onCancelClicked}>Cancelar</button>
                 </div>
             </form>
         </div>
