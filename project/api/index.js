@@ -2,9 +2,10 @@ import { connect } from './data/index.js'
 import express from 'express'
 import cors from 'cors'
 
-import { usersRouter } from './routes/usersRouter.js'
 import { errorHandler } from './middlewares/errorHandler.js'
+import { usersRouter } from './routes/usersRouter.js'
 import { authStudentsRouter } from './routes/authStudentsRouter.js'
+import { videosRouter } from './routes/videosRouter.js'
 
 const { MONGO_URL_DEV, PORT } = process.env
 
@@ -20,6 +21,7 @@ connect(MONGO_URL_DEV)
 
         api.use('/users', usersRouter)
         api.use('/auth-students', authStudentsRouter)
+        api.use('/videos', videosRouter)
 
         api.use(errorHandler)
 

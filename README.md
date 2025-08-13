@@ -60,8 +60,10 @@ Proyecto desarrollado en MERN(MongoDB, Express, React, Node.js) para ofrecer con
 ### Video (`Video`)
 - titulo (string, required)
 - description (string, required)
-- tratamiento (string, required)
+- zona tratamiento (string, required)
 - vimeoId (string, required, ID o URL parcial de Vimeo)
+- vimeoHash (string, required, default: null)
+- isPublished (boolean, default: false)
 
 ### Pregunta (`Pregunta`)
 - autorId (ObjectId, referencia a User)

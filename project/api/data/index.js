@@ -1,6 +1,7 @@
 import mongoose from 'mongoose'
 import { User } from './models.js'
 import { AuthStudent } from './models.js'
+import { Video } from './models.js'
 
 const { connect, disconnect } = mongoose
 
@@ -9,5 +10,6 @@ export {
     disconnect,
 
     User,
-    AuthStudent
+    AuthStudent,
+    Video
 }

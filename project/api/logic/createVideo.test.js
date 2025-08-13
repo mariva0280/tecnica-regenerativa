@@ -1,13 +1,13 @@
 import { connect, disconnect } from '../data/index.js'
-import { authenticateUser } from './authenticateUser.js'
+import { createVideo } from './createVideo.js'
 
 connect('mongodb://localhost:27017/test-tecnica')
     .then(() => {
-        try{
-            return authenticateUser('vanessaF', '123123123')
-                .then(user => console.log('user authenticated', user))
+        try {
+            return createVideo('Manos','Evaluación clinica','manos','123456789',null, true)
+                .then(() => console.log('Video created'))
                 .catch(error => console.error(error))
-        } catch(error) {
+        } catch (error) {
             console.error(error)
         }
     })

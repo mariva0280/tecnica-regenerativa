@@ -67,10 +67,52 @@ const authStudent = new Schema({
     }
 }, { timestamps: true })
 
+const video = new Schema({
+    title: {
+        type: String,
+        required: true,
+        trim: true
+    },
+
+    description: {
+        type: String,
+        trim: true,
+        default:''
+    },
+
+    zone: {
+        type: String,
+        required: true,
+        lowercase: true,
+        trim: true
+    },
+
+    vimeoId: {
+        type: String,
+        required: true,
+        unique: true,
+        trim: true
+    },
+
+    vimeoHash: {
+        type: String,
+        trim: true,
+        default: null
+    },
+
+    isPublished: {
+        type: Boolean,
+        default: false
+    }
+
+}, { timestamps: true })
+
 const User = model ('User', user)
-const AuthStudent = model( 'AuthStudent', authStudent)
+const AuthStudent = model ('AuthStudent', authStudent)
+const Video = model ('Video', video)
 
 export {
     User,
-    AuthStudent
+    AuthStudent,
+    Video
 }

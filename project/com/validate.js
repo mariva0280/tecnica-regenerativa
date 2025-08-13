@@ -34,5 +34,42 @@ export const validate = {
         if (typeof code !== 'string') throw new ValidationError('Invalid code type')
         if (code.length < 4) throw new ValidationError('Invalid code min length')
         if (code.length > 12) throw new ValidationError('Invalid code max length')        
+    },
+
+    title(title) {
+        if (typeof title !== 'string' || !title.trim()) throw new ValidationError('Invalid title')
+        if (title.length > 120) throw new ValidationError('Invalid title max length')    
+    },
+
+    description(description) {
+        if (typeof description !== 'string') throw new ValidationError('Invalid description type')
+        if (description == null) throw new ValidationError('Invalid description')   
+        if (description.length > 1500) throw new ValidationError('Invalid description max length')     
+    },
+
+    zone(zone) {
+        if (typeof zone !== 'string') throw new ValidationError('Invalid zone type')
+        if (!zone.trim()) throw new ValidationError('Invalid zone') 
+        if (zone > 50) throw new ValidationError('Invalid zone max lenght')       
+    },
+
+    vimeoId(vimeoId) {
+        if (typeof vimeoId !== 'string') throw new ValidationError('Invalid vimeoId type')
+        if (!vimeoId.trim()) throw new ValidationError('Invalid vimeoId')
+        if (!/^\d{6,12}$/.test(vimeoId)) throw new ValidationError('invalid vimeoId format')       
+    },
+
+    vimeoHash(vimeoHash) {
+        if (vimeoHash == null || vimeoHash === '') return
+        if (typeof vimeoHash !== 'string') throw new ValidationError('invalid vimeoHash type')
+    },
+
+    isPublished(isPublished) {
+        if (typeof isPublished !== 'boolean') throw new ValidationError('invalid isPublished type')
+    },
+
+    videoId(videoId) {
+        if (typeof videoId !== 'string') throw new ValidationError('invalid videoId type')
+        if (!/^[0-9a-fA-F]{24}$/.test(videoId)) throw new ValidationError('invalid videoId length')
     }
 }
