@@ -37,7 +37,7 @@ export const CreateVideo = ({ onCancelClicked, onVideoCreated }) => {
 
     console.log('CreateVideo -> render')
 
-        (
+    return (
             <div className="p-5">
                 <h1 className="text-xl font-bold mb-4">Crear vídeo</h1>
 
