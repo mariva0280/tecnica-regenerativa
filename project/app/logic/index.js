@@ -5,6 +5,7 @@ import { loginUser } from './loginUser'
 import { getUserUsername } from './getUserUsername'
 import { logoutUser } from './logoutUser'
 import { registerAuthStudent } from  './registerAuthStudent'
+import { createVideo } from './createVideo'
 
 export const logic = {
     registerUser,
@@ -13,5 +14,6 @@ export const logic = {
     loginUser,
     getUserUsername,
     logoutUser,
-    registerAuthStudent
+    registerAuthStudent,
+    createVideo
 }

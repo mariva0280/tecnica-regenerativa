@@ -6,6 +6,7 @@ import { useContext } from '../context'
 
 import { AdminPanel } from './components/AdminPanel'
 import { CreateAuthStudent } from './components/CreateAuthStudent'
+import { CreateVideo } from './components/CreateVideo'
 
 export const Home = ({ onUserLoggedOut }) => {
     const navigate = useNavigate()
@@ -51,6 +52,10 @@ export const Home = ({ onUserLoggedOut }) => {
 
     const handleAuthStudentCreated = () => navigate('/admin-panel')
 
+    const handleCreateVideoClick = () => navigate('/admin-panel')
+
+    const handleCreateVideoCancelClicked = () => navigate('/admin-panel')
+
     console.log('Home -> render')
 
     return <div className="p-5">
@@ -72,6 +77,11 @@ export const Home = ({ onUserLoggedOut }) => {
             <Route path="/create-auth-student" element={<CreateAuthStudent
                 onCancelClicked={handleCreateAuthStudentCancelClicked}
                 onAuthStudentCreated={handleAuthStudentCreated}
+            />} />
+
+            <Route path="/create-video" element={<CreateVideo
+                onCancelClicked={handleCreateVideoCancelClicked}
+                onVideoCreated={handleCreateVideoClick}
             />} />
         </Routes>
     </div>
