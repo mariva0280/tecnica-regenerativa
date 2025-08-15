@@ -28,3 +28,15 @@ videosRouter.post('/', jsonBodyParser, (request, response, next) => {
         next(error)
     }
 })
+
+videosRouter.get('/', (request, response, next) => {
+    try{
+        const { zone, search, page, limit, onlyPublished } = request.query
+
+        logic.getVideos(zone, search, page, limit, onlyPublished)
+            .then(videos => response.status(200).json(videos))
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})
