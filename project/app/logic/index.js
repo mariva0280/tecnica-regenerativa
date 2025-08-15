@@ -6,6 +6,7 @@ import { getUserUsername } from './getUserUsername'
 import { logoutUser } from './logoutUser'
 import { registerAuthStudent } from  './registerAuthStudent'
 import { createVideo } from './createVideo'
+import { getVideos } from './getVideos'
 
 export const logic = {
     registerUser,
@@ -15,5 +16,6 @@ export const logic = {
     getUserUsername,
     logoutUser,
     registerAuthStudent,
-    createVideo
+    createVideo,
+    getVideos
 }

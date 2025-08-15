@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Routes, Route, useNavigate } from 'react-router'
+import { Routes, Route, useNavigate, NavLink, Navigate } from 'react-router'
 
 import { logic } from '../logic'
 import { useContext } from '../context'
@@ -7,6 +7,7 @@ import { useContext } from '../context'
 import { AdminPanel } from './components/AdminPanel'
 import { CreateAuthStudent } from './components/CreateAuthStudent'
 import { CreateVideo } from './components/CreateVideo'
+import { Videos } from './components/Videos'
 
 export const Home = ({ onUserLoggedOut }) => {
     const navigate = useNavigate()
@@ -21,8 +22,11 @@ export const Home = ({ onUserLoggedOut }) => {
                 .then(username => {
                     setUsername(username)
 
-                    if (logic.isUserAdministrator())
+                    if (logic.isUserAdministrator()) {
                         navigate('/admin-panel')
+                    } else {
+                        navigate('/videos', { replace: true })
+                    }    
                 })
                 .catch (error => {
                     console.error(error)
@@ -71,6 +75,19 @@ export const Home = ({ onUserLoggedOut }) => {
             >Logout</button>
         </div>
 
+        <nav className="mt-4 flex gap-4 border-b pb-2">
+            <NavLink 
+                to="/videos"
+                className={({ isActive }) => isActive ? 'underline font-semibold' : 'opacity-70 hover:underline'}
+            >Videos 
+            </NavLink>
+            <NavLink
+                to="/questions"
+                className={({ isActive }) => isActive ? 'underline font-semibold' : 'opacity-70 hover:underline'}
+            >Preguntas
+            </NavLink>
+        </nav>
+
         <Routes>
             <Route path="/admin-panel" element={<AdminPanel />} />
 
@@ -83,6 +100,12 @@ export const Home = ({ onUserLoggedOut }) => {
                 onCancelClicked={handleCreateVideoCancelClicked}
                 onVideoCreated={handleCreateVideoClick}
             />} />
+
+            <Route path="/videos" element={<Videos />} />
+            <Route path="/questions" element={<div className="p-5">Preguntas (pendiente)</div>} />
+
+            {/* Redirección por defecto a /videos si cae en / */}
+            <Route index element={<Navigate to="/videos" />} />
         </Routes>
     </div>
 }
