@@ -48,9 +48,10 @@ export const validate = {
     },
 
     zone(zone) {
+        if (zone === undefined) return
         if (typeof zone !== 'string') throw new ValidationError('Invalid zone type')
         if (!zone.trim()) throw new ValidationError('Invalid zone') 
-        if (zone > 50) throw new ValidationError('Invalid zone max lenght')       
+        if (zone.length > 50) throw new ValidationError('Invalid zone max length')       
     },
 
     vimeoId(vimeoId) {
@@ -71,5 +72,38 @@ export const validate = {
     videoId(videoId) {
         if (typeof videoId !== 'string') throw new ValidationError('invalid videoId type')
         if (!/^[0-9a-fA-F]{24}$/.test(videoId)) throw new ValidationError('invalid videoId length')
+    },
+
+    page(page) {
+        if (page === undefined) return
+        if (typeof page === 'string') {
+            if (!/^\d+$/.test(page)) throw new ValidationError('invalid page type')
+            page = Number(page)
+        }
+        if (typeof page !== 'number') throw new ValidationError('invalid page type')
+        if (!Number.isInteger(page) || page < 1) throw new ValidationError('invalid page min value')
+    },
+
+    limit(limit) {
+        if (limit === undefined) return
+        if (typeof limit === 'string') {
+            if (!/^\d+$/.test(limit)) throw new ValidationError('invalid limit type')
+            limit = Number(limit)
+        }
+        if (typeof limit !== 'number') throw new ValidationError('invalid limit type')
+        if (!Number.isInteger(limit) || limit < 1 || limit > 100) throw new ValidationError('invalid limit value')
+    },
+
+    search(search) {
+        if (search === undefined) return
+        if (typeof search !== 'string') throw new ValidationError('invalid search type')
+        if (!search.trim()) throw new ValidationError('invalid search value')
+    },
+
+    boolean(value) {
+        if (value === undefined) return
+        if (typeof value === 'boolean') return
+        if (typeof value === 'string' && (value === 'true' || value === 'false')) return
+        throw new ValidationError('invalid boolean value')
     }
 }
