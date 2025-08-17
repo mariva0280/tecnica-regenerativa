@@ -41,6 +41,11 @@ const user = new Schema ({
         required: true,
         enum: ['regular', 'admin'],
         default: 'regular'
+    },
+
+    active: {
+        type: Boolean,
+        default: true
     }
 
 }, { timestamps: true })

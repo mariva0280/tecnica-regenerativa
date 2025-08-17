@@ -40,3 +40,23 @@ videosRouter.get('/', (request, response, next) => {
         next(error)
     }
 })
+
+videosRouter.delete('/:id', (request, response, next) => {
+    try{
+        const authorization = request.headers.authorization
+        if (!authorization) throw new AuthorizationError('missing token')
+        
+        const token = authorization.slice(7)
+        const { role } = jwt.verify(token, JWT_SECRET)
+        
+        if (role !== 'admin') throw new AuthorizationError('not allowed')
+
+        const { id } = request.params    
+
+        logic.deleteVideo(id)
+            .then(() => response.status(204).send())
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})  

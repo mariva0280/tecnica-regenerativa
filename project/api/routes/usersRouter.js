@@ -39,8 +39,9 @@ usersRouter.post('/auth', jsonBodyParser, (request, response, next) => {
 usersRouter.get('/self/username', (request, response, next) => {
     try {
         const authorization = request.headers.authorization
+        if (!authorization) throw new AuthorizationError('missing token')
+        
         const token = authorization.slice(7)
-
         const { sub: userId } = jwt.verify(token, JWT_SECRET)
 
         logic.getUserUsername(userId)

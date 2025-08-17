@@ -1,7 +1,7 @@
 import bcrypt from 'bcryptjs'
 
 import { User } from '../data/index.js'
-import { validate, SystemError, CredentialsError, NotFoundError } from 'com'
+import { validate, SystemError, CredentialsError, NotFoundError, AuthorizationError } from 'com'
 
 export const authenticateUser = (username, password) => {
     validate.username(username)
@@ -11,6 +11,7 @@ export const authenticateUser = (username, password) => {
         .catch(error => { throw new SystemError('mongo error') })
         .then(user => {
             if(!user) throw new NotFoundError('user not found')
+            if (user.active === false) throw new AuthorizationError('account disabled')    
 
             return bcrypt.compare(password, user.password)
                 .catch(error => { throw new SystemError(error.message) })
