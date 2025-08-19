@@ -14,6 +14,10 @@ export const errorHandler = (error, request, response, next) => {
         status = 401
     else if (error instanceof AuthorshipError)
         status = 403
+    else if ( error instanceof AuthorizationError) {
+        status = 403
+        error.name = AuthorizationError.name
+    }
     else if (error instanceof DuplicityError)
         status = 409
     else if (error instanceof JsonWebTokenError) {

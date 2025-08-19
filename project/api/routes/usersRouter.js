@@ -1,4 +1,4 @@
-import { Router } from 'express'
+import { request, Router } from 'express'
 import { jsonBodyParser } from '../middlewares/jsonBodyParser.js'
 import { logic } from '../logic/index.js'
 import jwt from 'jsonwebtoken'
@@ -48,6 +48,75 @@ usersRouter.get('/self/username', (request, response, next) => {
             .then(username => response.status(200).json(username))
             .catch(error => next(error))
     } catch (error) {
+        next(error)
+    }
+})
+
+usersRouter.patch('/:userId/activate', (request, response, next) => {
+    try {
+        const { userId } = request.params
+
+        logic.activateUser(userId)
+            .then(() => response.status(204).send())
+            .catch(error => next(error))
+    } catch (error) {
+        next(error) 
+    }
+    
+})
+
+usersRouter.patch('/by-email/activate', jsonBodyParser, (request, response, next) => {
+    try {
+        const { email } = request.body
+
+        logic.activateUserByEmail(email)
+            .then(() => response.status(204).send())
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})
+
+usersRouter.patch('/:userId/suspend', (request, response, next) => {
+    try {
+        const { userId } = request.params
+
+        logic.suspendUser(userId)
+            .then(() => response.status(204).send())    
+            .catch(error => next(error))    
+    } catch (error) {
+        next(error) 
+    }
+})
+
+usersRouter.patch('/by-email/suspend', jsonBodyParser, (request, response, next) => {
+    try {
+        const { email } = request.body
+
+        logic.suspendUserByEmail(email)    
+            .then(() => response.status(204).send())    
+            .catch(error => next(error))    
+    } catch (error) {
+        next(error)
+    }
+})
+
+usersRouter.get('/', (request, response, next) => {
+    try {
+        const authorization = request.headers.authorization
+        if (!authorization) throw new AuthorizationError('missing token')
+        
+        const token = authorization.slice(7)
+        const { role } = jwt.verify(token, JWT_SECRET)
+        
+        if (role !== 'admin') throw new AuthorizationError('not allowed')
+
+        const { search, role: roleFilter, active, page, limit } = request.query
+
+        logic.getAllUsers({ search, role: roleFilter, active, page, limit })
+            .then(users => response.status(200).json(users))
+            .catch(error => next(error))
+    } catch(error) {
         next(error)
     }
 })
