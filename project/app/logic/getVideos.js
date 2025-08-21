@@ -1,7 +1,13 @@
 import { data } from '../data'
-import { SystemError, errors } from 'com'
+import { validate, SystemError, errors } from 'com'
 
 export const getVideos = ({ zone, search, page, limit, onlyPublished } = {}) => {
+    if (zone !== undefined) validate.zone(zone)
+    if (search !== undefined) validate.search(search)
+    if (page !== undefined) validate.page(page) 
+    if (limit !== undefined) validate.limit(limit)
+    if (onlyPublished !== undefined) validate.boolean(onlyPublished)
+
     const params = new URLSearchParams()
 
     if (zone) params.set('zone', String(zone).trim().toLowerCase())

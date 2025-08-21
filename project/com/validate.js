@@ -105,5 +105,12 @@ export const validate = {
         if (typeof value === 'boolean') return
         if (typeof value === 'string' && (value === 'true' || value === 'false')) return
         throw new ValidationError('invalid boolean value')
+    },
+
+    role(role) {
+        if (role === undefined) return
+        if (typeof role !== 'string') throw new ValidationError('invalid role type')
+        const allowed = ['regular', 'admin', 'superadmin', 'curator']
+        if (!allowed.includes(role)) throw new ValidationError('invalid role value')
     }
 }
