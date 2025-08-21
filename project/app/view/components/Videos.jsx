@@ -6,7 +6,7 @@ export const Videos = () => {
     const { alert } = useContext()
 
     const [zoneInput, setZoneInput] = useState('')
-    const [zone, setZone] = useState('')
+    const [zone, setZone] = useState(undefined)
     const [page, setPage] = useState(1)
     const [videos, setVideos] = useState([])
     const [selected, setSelected] = useState(null)
@@ -14,7 +14,8 @@ export const Videos = () => {
 
     useEffect(() => {
         const time = setTimeout(() => {
-            setZone(zoneInput.trim().toLowerCase())
+            const zone = zoneInput.trim().toLowerCase()
+            setZone(zone || undefined)
             setPage(1)
         }, 300)
         return () => clearTimeout(time)

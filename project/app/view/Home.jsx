@@ -6,6 +6,7 @@ import { useContext } from '../context'
 
 import { AdminPanel } from './components/AdminPanel'
 import { CreateAuthStudent } from './components/CreateAuthStudent'
+import { UsersList } from './components/UsersList'
 import { CreateVideo } from './components/CreateVideo'
 import { Videos } from './components/Videos'
 
@@ -103,7 +104,7 @@ export const Home = ({ onUserLoggedOut }) => {
 
             <Route path="/videos" element={<Videos />} />
             <Route path="/questions" element={<div className="p-5">Preguntas (pendiente)</div>} />
-
+            <Route path="/users-list" element={<UsersList />} /> 
             {/* Redirección por defecto a /videos si cae en / */}
             <Route index element={<Navigate to="/videos" />} />
         </Routes>

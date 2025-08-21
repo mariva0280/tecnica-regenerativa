@@ -2,16 +2,19 @@ import { data } from '../data'
 import { validate, SystemError, errors } from 'com'
 
 export const getVideos = ({ zone, search, page, limit, onlyPublished } = {}) => {
-    if (zone !== undefined) validate.zone(zone)
-    if (search !== undefined) validate.search(search)
+    const _zone = (typeof zone === 'string' && zone.trim()) ? zone.trim().toLowerCase() : undefined    
+    const _search = (typeof search === 'string' && search.trim()) ? search.trim() : undefined
+
+    if (_zone !== undefined) validate.zone(_zone)
+    if (_search !== undefined) validate.search(_search)
     if (page !== undefined) validate.page(page) 
     if (limit !== undefined) validate.limit(limit)
     if (onlyPublished !== undefined) validate.boolean(onlyPublished)
 
     const params = new URLSearchParams()
 
-    if (zone) params.set('zone', String(zone).trim().toLowerCase())
-    if (search) params.set('search', String(search).trim())
+    if (_zone) params.set('zone', _zone)
+    if (_search) params.set('search', _search)
     if (page !== null) params.set('page', String(page))
     if (limit !== null) params.set('limit', String(limit))
     if (onlyPublished !== undefined) params.set('onlyPublished', String(onlyPublished))
