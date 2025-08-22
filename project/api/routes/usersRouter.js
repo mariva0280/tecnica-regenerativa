@@ -96,9 +96,14 @@ usersRouter.patch('/:userId/suspend', (request, response, next) => {
 
 usersRouter.patch('/by-email/suspend', jsonBodyParser, (request, response, next) => {
     try {
+        const authorization = request.headers.authorization
+        if (!authorization) throw new AuthorizationError('missing token')
+        const token = authorization.slice(7)
+        const { role } = jwt.verify(token, JWT_SECRET)
+
         const { email } = request.body
 
-        logic.suspendUserByEmail(email)    
+        logic.suspendUserByEmail(email, role)    
             .then(() => response.status(204).send())    
             .catch(error => next(error))    
     } catch (error) {
