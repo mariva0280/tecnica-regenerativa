@@ -1,7 +1,9 @@
 import { User } from '../data/index.js'
 import { validate, SystemError, NotFoundError } from 'com'
-
-export const activateUserByEmail = (email) => {
+import { assertRole } from './helper/authorize.js'
+export const activateUserByEmail = (email, role) => {
+    validate.role(role)
+    assertRole(role, ['admin', 'superadmin'])
     validate.email(email)
 
     return User.findOneAndUpdate(
