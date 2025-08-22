@@ -4,7 +4,7 @@ import { registerUser } from './registerUser.js'
 connect('mongodb://localhost:27017/test-tecnica')
     .then(() => {
         try{
-            return registerUser('Vanessa Fdez', 'vanessa@fdez.com', 'vanessaF', '123123123', 'ABC123')
+            return registerUser('Isabel Morgado', 'isabel@morgado.com', 'isabelM', '123123123', 'ABC125')
             .then(() => console.log('user registered'))
             .catch(error => console.error(error))
         } catch(error) {

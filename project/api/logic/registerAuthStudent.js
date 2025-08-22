@@ -2,9 +2,7 @@ import { AuthStudent } from '../data/index.js'
 import { validate, SystemError, DuplicityError } from 'com'
 import { assertRole } from './helper/authorize.js'
 
-export const registerAuthStudent = (email, code, role) => {
-    validate.role(role)
-    assertRole(role, ['admin', 'superadmin'])
+export const registerAuthStudent = (email, code) => {
     
     validate.email(email)
 
