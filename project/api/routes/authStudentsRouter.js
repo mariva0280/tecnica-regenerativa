@@ -10,9 +10,15 @@ export const authStudentsRouter = Router()
 
 authStudentsRouter.post('/', jsonBodyParser, (request, response, next) => {
     try {
+        const authorization = request.headers.authorization
+        if (!authorization) throw new AuthorizationError('missing token')
+        
+        const token = authorization.slice(7)
+        const { role } = jwt.verify(token, JWT_SECRET)
+        
         const { email, code } = request.body
 
-        logic.registerAuthStudent(email, code)
+        logic.registerAuthStudent(email, code, role)
             .then(() => response.status(201).send())
             .catch(error => next(error))
     } catch (error) {
