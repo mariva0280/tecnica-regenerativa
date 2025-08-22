@@ -48,12 +48,11 @@ videosRouter.delete('/:id', (request, response, next) => {
         
         const token = authorization.slice(7)
         const { role } = jwt.verify(token, JWT_SECRET)
-        
-        if (role !== 'admin') throw new AuthorizationError('not allowed')
+
 
         const { id } = request.params    
 
-        logic.deleteVideo(id)
+        logic.deleteVideo(id, role)
             .then(() => response.status(204).send())
             .catch(error => next(error))
     } catch (error) {
