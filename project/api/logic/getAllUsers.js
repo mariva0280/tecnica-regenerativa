@@ -1,21 +1,29 @@
+import { assertRole } from './helper/authorize.js'
 import { User } from '../data/index.js'
-import { SystemError } from 'com'
+import { validate, SystemError } from 'com'
 
-const escapeRx = s => s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')
+export const getAllUsers = ({ search, role: roleFilter, active, page = 1, limit = 20} = {}, role) => {
+    validate.role(role)
+    assertRole(role, ['admin', 'superadmin'])
 
-export const getAllUsers = ({ search, role, active, page = 1, limit = 20} = {}) => {
+    if (search !== undefined) validate.search(search)
+    if (roleFilter !== undefined) validate.role(roleFilter) 
+    if (active !== undefined) validate.boolean(active)
+    if (page !== undefined) validate.page(page)  
+    if (limit !== undefined) validate.limit(limit)
+
+    const query = {}  
+    if (search && search.trim()) {
+        const rx = new RegExp(search.trim(), 'i')
+        query.$or = [{ name: rx }, { username: rx }, { email: rx }]
+    }  
+
+    if (roleFilter) query.role = roleFilter
+    if (active !== undefined) query.active = (active === 'true' || active === true)
+
+
     const _page = Number(page) || 1
     const _limit = Math.min(Number(limit) ||20, 100)
-
-    const query = {}
-
-    if (role) query.role = String(role).toLowerCase()
-    if (active !== undefined) query.active = (String(active) === 'true')
-
-    if (search && String(search).trim()) {
-        const rx = new RegExp(escapeRx(String(search).trim()), 'i')
-        query.$or = [{ name: rx }, { username: rx }, { email: rx }]
-    }
 
     const projection = { name: 1, email: 1, role: 1, active: 1 }
 

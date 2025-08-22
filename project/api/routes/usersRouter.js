@@ -108,12 +108,10 @@ usersRouter.get('/', (request, response, next) => {
         
         const token = authorization.slice(7)
         const { role } = jwt.verify(token, JWT_SECRET)
-        
-        if (role !== 'admin') throw new AuthorizationError('not allowed')
 
         const { search, role: roleFilter, active, page, limit } = request.query
 
-        logic.getAllUsers({ search, role: roleFilter, active, page, limit })
+        logic.getAllUsers({ search, role: roleFilter, active, page, limit }, role)
             .then(users => response.status(200).json(users))
             .catch(error => next(error))
     } catch(error) {
