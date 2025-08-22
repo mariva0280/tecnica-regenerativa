@@ -16,12 +16,12 @@ videosRouter.post('/', jsonBodyParser, (request, response, next) => {
         const token = authorization.slice(7)
         const { role } = jwt.verify(token, JWT_SECRET)
         
-        if (role !== 'admin') throw new AuthorizationError('not allowed')
+        
 
         const { title, description, zone, vimeoId, vimeoHash, isPublished } = request.body
         const published = (isPublished === true || isPublished === 'true')
 
-        logic.createVideo(title, description, zone, vimeoId, vimeoHash, published)
+        logic.createVideo(title, description, zone, vimeoId, vimeoHash, published, role)
             .then(() => response.status(201).send())
             .catch(error => next(error))
     } catch (error) {

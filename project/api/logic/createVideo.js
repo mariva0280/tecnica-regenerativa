@@ -1,13 +1,17 @@
+import { assertRole } from './helper/authorize.js'
 import { Video } from '../data/index.js'
-import { validate, SystemError, DuplicityError, ValidationError } from 'com'
+import { validate, SystemError, DuplicityError, AuthorizationError } from 'com'
 
-export const createVideo = (title, description, zone, vimeoId, vimeoHash, isPublished) => {
+export const createVideo = (title, description, zone, vimeoId, vimeoHash, isPublished, role) => {
+    assertRole(role, ['curator', 'admin', 'superadmin'])
+
     validate.title(title)
     validate.description(description)
     validate.zone(zone)
     validate.vimeoId(vimeoId)
     validate.vimeoHash(vimeoHash)
     validate.isPublished(isPublished)
+    validate.role(role)
 
     const doc = {
         title: title.trim(),
