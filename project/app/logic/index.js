@@ -1,7 +1,5 @@
 import { registerUser } from './registerUser'
 import { isUserLoggedIn } from './isUserLoggedIn'
-import { isUserRole } from './isUserRole'
-import { isUserAdministrator } from './isUserAdministrator'
 import { loginUser } from './loginUser'
 import { getUserUsername } from './getUserUsername'
 import { logoutUser } from './logoutUser'
@@ -15,7 +13,6 @@ import { getVideos } from './getVideos'
 export const logic = {
     registerUser,
     isUserLoggedIn,
-    isUserAdministrator,
     loginUser,
     getUserUsername,
     logoutUser,

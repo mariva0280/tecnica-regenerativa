@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Routes, Route, useNavigate, NavLink, Navigate } from 'react-router'
+import { Routes, Route, useNavigate, NavLink, Navigate, Link } from 'react-router'
 
 import { logic } from '../logic'
 import { useContext } from '../context'
@@ -9,6 +9,8 @@ import { CreateAuthStudent } from './components/CreateAuthStudent'
 import { UsersList } from './components/UsersList'
 import { CreateVideo } from './components/CreateVideo'
 import { Videos } from './components/Videos'
+
+import { canSeeStudentArea, canCreateVideos, canManageUsers, canManageWhiteList, isAdminLike, canAccessPanel } from '../logic/isUserRole'
 
 export const Home = ({ onUserLoggedOut }) => {
     const navigate = useNavigate()
@@ -23,13 +25,13 @@ export const Home = ({ onUserLoggedOut }) => {
                 .then(username => {
                     setUsername(username)
 
-                    if (logic.isUserAdministrator()) {
-                        navigate('/admin-panel')
+                    if (canAccessPanel()) {
+                        navigate('/admin-panel', { replace: true })
                     } else {
                         navigate('/videos', { replace: true })
-                    }    
+                    }
                 })
-                .catch (error => {
+                .catch(error => {
                     console.error(error)
 
                     alert(error.message)
@@ -75,36 +77,48 @@ export const Home = ({ onUserLoggedOut }) => {
                 onClick={handleLogoutClick}
             >Logout</button>
         </div>
-
         <nav className="mt-4 flex gap-4 border-b pb-2">
-            <NavLink 
-                to="/videos"
-                className={({ isActive }) => isActive ? 'underline font-semibold' : 'opacity-70 hover:underline'}
-            >Videos 
-            </NavLink>
-            <NavLink
-                to="/questions"
-                className={({ isActive }) => isActive ? 'underline font-semibold' : 'opacity-70 hover:underline'}
-            >Preguntas
-            </NavLink>
+            {canSeeStudentArea() && (
+                <>
+                    <NavLink
+                        to="/videos"
+                        className={({ isActive }) => isActive ? 'underline font-semibold' : 'opacity-70 hover:underline'}
+                    >Videos
+                    </NavLink>
+                    <NavLink
+                        to="/questions"
+                        className={({ isActive }) => isActive ? 'underline font-semibold' : 'opacity-70 hover:underline'}
+                    >Preguntas
+                    </NavLink>
+                </>
+            )}
+
+            {canAccessPanel() && (
+                <NavLink to="/admin-panel" className={({ isActive }) => isActive ? 'underline font-semibold' : 'opacity-70 hover:underline'}>
+                    Panel
+                </NavLink>
+            )}
         </nav>
 
         <Routes>
-            <Route path="/admin-panel" element={<AdminPanel />} />
+            <Route path="/admin-panel" element={canAccessPanel() ? <AdminPanel /> : <Navigate to="/videos" replace />} />
 
-            <Route path="/create-auth-student" element={<CreateAuthStudent
+            <Route path="/create-auth-student" element={canManageWhiteList() ? (<CreateAuthStudent
                 onCancelClicked={handleCreateAuthStudentCancelClicked}
                 onAuthStudentCreated={handleAuthStudentCreated}
-            />} />
+            />) : <Navigate to="/admin-panel" replace />} />
 
-            <Route path="/create-video" element={<CreateVideo
+            <Route path="/create-video" element={canCreateVideos() ? (<CreateVideo
                 onCancelClicked={handleCreateVideoCancelClicked}
                 onVideoCreated={handleCreateVideoClick}
-            />} />
+            />) : <Navigate to="/admin-panel" replace />} />
+
+            <Route path="/users-list" element={canManageUsers() ? <UsersList
+            /> : <Navigate to="/admin-panel" replace />} />
 
             <Route path="/videos" element={<Videos />} />
             <Route path="/questions" element={<div className="p-5">Preguntas (pendiente)</div>} />
-            <Route path="/users-list" element={<UsersList />} /> 
+
             {/* Redirección por defecto a /videos si cae en / */}
             <Route index element={<Navigate to="/videos" />} />
         </Routes>
