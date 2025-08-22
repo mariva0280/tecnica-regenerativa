@@ -1,5 +1,6 @@
 import { registerUser } from './registerUser'
 import { isUserLoggedIn } from './isUserLoggedIn'
+import { isUserRole } from './isUserRole'
 import { isUserAdministrator } from './isUserAdministrator'
 import { loginUser } from './loginUser'
 import { getUserUsername } from './getUserUsername'
