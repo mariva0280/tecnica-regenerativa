@@ -9,6 +9,7 @@ import { CreateAuthStudent } from './components/CreateAuthStudent'
 import { UsersList } from './components/UsersList'
 import { CreateVideo } from './components/CreateVideo'
 import { Videos } from './components/Videos'
+import { AdminVideoList } from './components/AdminVideoList'
 
 import { canSeeStudentArea, canCreateVideos, canManageUsers, canManageWhiteList, isAdminLike, canAccessPanel } from '../logic/isUserRole'
 
@@ -112,6 +113,11 @@ export const Home = ({ onUserLoggedOut }) => {
                 onCancelClicked={handleCreateVideoCancelClicked}
                 onVideoCreated={handleCreateVideoClick}
             />) : <Navigate to="/admin-panel" replace />} />
+
+            <Route
+                path="/admin-videos"
+                element={canCreateVideos() ? <AdminVideoList /> : <Navigate to="/videos" replace />}
+            />
 
             <Route path="/users-list" element={canManageUsers() ? <UsersList
             /> : <Navigate to="/admin-panel" replace />} />

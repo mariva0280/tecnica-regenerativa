@@ -16,6 +16,10 @@ export const AdminPanel = () => {
             {canCreateVideos() && (
                 <button className="bg-black text-white px-4 py-2" onClick={() => navigate('/create-video')}>Añadir video</button>
             )}
+
+                {canCreateVideos() && (
+                    <button className="bg-black text-white px-4 py-2" onClick={() => navigate('/admin-videos')}>Listado de videos</button>
+                )}
             
             {canManageUsers() && (
                 <button className="bg-black text-white px-4 py-2" onClick={() => navigate('/users-list')}>Listado de usuarios</button>
