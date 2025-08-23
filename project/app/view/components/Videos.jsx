@@ -49,13 +49,13 @@ export const Videos = () => {
     }, [zone, page])
     
     return (
-        <div className="p-5">
-            <h1 className="text-xl mb-3">Vídeos</h1>
+        <div className="max-w-6xl mx-auto rounded-2xl border border-black/10 bg-white p-5 shadow-sm">
+            <h1 className="text-xl font-semibold mb-3">Vídeos</h1>
 
             {/* Buscador por zona */}
-            <div className="flex items-center gap-2 mb-4">
+            <div className="flex gap-2 mb-4">
                 <input
-                    className="border px-2 py-1 w-full max-w-md"
+                    className="border border-black/10 rounded-xl px-3 py-2 w-full max-w-md focus:outline-none focus:ring-2 focus:ring-green-300"
                     placeholder="Filtrar por zona (manos, rodilla, hombro...)"
                     value={zoneInput}
                     onChange={(e) => setZoneInput(e.target.value)}
@@ -64,7 +64,7 @@ export const Videos = () => {
 
             {loading && <div className="mb-3">Cargando…</div>}
 
-            <div className="grid md:grid-cols-3 gap-4">
+            <div className="grid md:grid-cols-3 gap-6">
                 {/* Reproductor y detalle */}
                 <div className="md:col-span-2">
                     {selected ? (
@@ -74,11 +74,11 @@ export const Videos = () => {
                             <h2 className="mt-3 text-lg font-semibold">{selected.title}</h2>
                             {selected.zone && <div className="text-xs opacity-70">Zona: {selected.zone}</div>}
                             {selected.description && (
-                                <p className="text-sm opacity-80 mt-1 whitespace-pre-line">{selected.description}</p>
+                                <p className="text-sm opacity-80 mt-2 whitespace-pre-line">{selected.description}</p>
                             )}
                         </>
                     ) : (
-                        <div className="border p-4 rounded">No hay vídeos para mostrar.</div>
+                        <div className="border rounded-xl p-4 text-center text-black/60">No hay vídeos para mostrar.</div>
                     )}
                 </div>
 
@@ -92,13 +92,13 @@ export const Videos = () => {
                         return (
                             <button
                                 key={v._id || v.vimeoId}
-                                className={`w-full text-left border p-2 rounded hover:bg-gray-50 ${isActive ? 'border-black' : ''}`}
+                                className={`w-full text-left border  rounded-xl p-3 hover:bg-green-50 ${isActive ? 'border-green-400' : ''}`}
                                 onClick={() => setSelected(v)}
                                 title={v.zone}
                             >
-                                <div className="font-medium line-clamp-1">{v.title}</div>
-                                {v.zone && <div className="text-xs opacity-70">{v.zone}</div>}
-                                {v.description && <div className="text-xs opacity-70 line-clamp-2">{v.description}</div>}
+                                <div className="font-medium ">{v.title}</div>
+                                {v.zone && <div className="text-xs text-black/60">{v.zone}</div>}
+                                {v.description && <div className="text-xs text-black/50 truncate">{v.description}</div>}
                             </button>
                         )
                     })}
@@ -109,7 +109,7 @@ export const Videos = () => {
             {videos.length > 0 && (
                 <div className="mt-4 flex items-center gap-2">
                     <button
-                        className="border px-2 py-1"
+                        className="border-none rounded-2xl px-2 py-1 bg-indigo-300 hover:bg-indigo-500"
                         onClick={() => setPage(p => Math.max(1, p - 1))}
                         disabled={page === 1}
                     >
@@ -117,7 +117,7 @@ export const Videos = () => {
                     </button>
                     <span className="text-sm">Página {page}</span>
                     <button
-                        className="border px-2 py-1"
+                        className="border-none rounded-2xl px-2 py-1 bg-green-300 hover:bg-green-500"
                         onClick={() => setPage(p => p + 1)}
                     >
                         Siguiente
