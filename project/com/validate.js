@@ -112,5 +112,26 @@ export const validate = {
         if (typeof role !== 'string') throw new ValidationError('invalid role type')
         const allowed = ['regular', 'admin', 'superadmin', 'curator']
         if (!allowed.includes(role)) throw new ValidationError('invalid role value')
+    },
+
+    questionText(text) {
+        if  (text === undefined) return
+        if (typeof text !== 'string') throw new ValidationError('invalid question text type')
+        if (!text.trim()) throw new ValidationError('invalid question text value')
+        if (text.length > 2000) throw new ValidationError('invalid question text max length')    
+    },
+
+    audioUrl(url) {
+        if (url === undefined || url === null || url === '') return
+        if (typeof url !== 'string') throw new ValidationError('invalid audio url type')
+        const ok = /^https?:\/\/.+/i.test(url.trim())
+        if (!ok) throw new ValidationError('invalid audio url')
+    },
+
+    hasAnswer(value) {
+        if (value === undefined) return
+        if (typeof value === 'boolean') return
+        if (typeof value === 'string' && (value === 'true' || value === 'false')) return
+        throw new ValidationError('invalid hasAnswer value')
     }
 }
