@@ -6,6 +6,7 @@ import { errorHandler } from './middlewares/errorHandler.js'
 import { usersRouter } from './routes/usersRouter.js'
 import { authStudentsRouter } from './routes/authStudentsRouter.js'
 import { videosRouter } from './routes/videosRouter.js'
+import { questionsRouter } from './routes/questionsRouter.js'
 
 const { MONGO_URL_DEV, PORT } = process.env
 
@@ -22,6 +23,7 @@ connect(MONGO_URL_DEV)
         api.use('/users', usersRouter)
         api.use('/auth-students', authStudentsRouter)
         api.use('/videos', videosRouter)
+        api.use('/questions', questionsRouter)
 
         api.use(errorHandler)
 

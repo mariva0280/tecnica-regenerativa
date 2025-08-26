@@ -169,7 +169,8 @@ const question = new Schema({
 }, {timestamps: true})
 
 question.index({ zone: 1, createdAt: -1 })
-question.index({ title: 'text', body: 'text', tags: 1 })
+question.index({ title: 'text', body: 'text' })
+question.index({ tags: 1 })
 
 
 const User = model ('User', user)

@@ -11,6 +11,8 @@ import { getAllUsers } from './getAllUsers.js'
 import { createVideo } from './createVideo.js'
 import { getVideos } from './getVideos.js'  
 import { deleteVideo } from './deleteVideo.js'
+import { createQuestion } from './createQuestion.js'
+import { getQuestions } from './getQuestions.js'
 
 
 export const logic = {
@@ -26,6 +28,8 @@ export const logic = {
     getAllUsers,
     createVideo,
     getVideos,
-    deleteVideo
+    deleteVideo,
+    createQuestion,
+    getQuestions
 
 }

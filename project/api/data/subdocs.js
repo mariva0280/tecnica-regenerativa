@@ -7,7 +7,7 @@ const { ObjectId } = Types
  export const AudioAsset = new Schema({
     storage: {
         type: String,
-        enum: ['local', 'cloudinary', 's3'],
+        enum: ['local', 'cloudinary', 's3', 'url'],
         required: true
     },
 
@@ -75,4 +75,4 @@ export const Answer = new Schema({
         type: Boolean,
         default: true
     }
-}, { timestamps })
+}, { timestamps: true })
