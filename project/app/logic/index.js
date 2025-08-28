@@ -10,7 +10,8 @@ import { deactivateUserByEmail } from './deactivateUserByEmail'
 import { createVideo } from './createVideo'
 import { getVideos } from './getVideos'
 import { deleteVideo } from './deleteVideo'
-
+import { createQuestion } from './createQuestion'
+import { getQuestions } from './getQuestions'
 export const logic = {
     registerUser,
     isUserLoggedIn,
@@ -23,5 +24,7 @@ export const logic = {
     deactivateUserByEmail,
     createVideo,
     getVideos,
-    deleteVideo
+    deleteVideo,
+    createQuestion,
+    getQuestions
 }
