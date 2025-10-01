@@ -5,10 +5,10 @@ const { connect, disconnect } = mongoose
 
 connect('mongodb://localhost:27017/test-tecnica')
     .then(() => {
-        return User.findById('68a83b59b75c2a6db493a157')
+        return User.findById('68a83afe59ae2ff4644776ea')
             .catch(error => { throw new Error(error.message) })
             .then(user => {
-                user.role = 'curator'
+                user.role = 'admin'
 
                 return user.save()
                     .catch(error => { throw new Error(error.message) })
