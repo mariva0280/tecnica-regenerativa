@@ -24,7 +24,7 @@ export const getQuestions = ({ zone, search, page, limit, hasAnswer } = {}) => {
     return fetch(url, {
         method: 'GET', 
         headers: {
-            Authorization: 'Bearer ' + data.token()
+            Authorization: 'Bearer ' + data.getToken()
         }
        })
         .catch(error => { throw new SystemError('connection error') })

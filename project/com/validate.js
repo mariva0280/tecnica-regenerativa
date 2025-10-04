@@ -124,8 +124,10 @@ export const validate = {
     audioUrl(url) {
         if (url === undefined || url === null || url === '') return
         if (typeof url !== 'string') throw new ValidationError('invalid audio url type')
-        const ok = /^https?:\/\/.+/i.test(url.trim())
-        if (!ok) throw new ValidationError('invalid audio url')
+        const trimmed = url.trim()
+        const isHttp = /^https?:\/\//i.test(trimmed)
+        const isLocal = /^\/?uploads\//i.test(trimmed)
+        if (!isHttp && !isLocal) throw new ValidationError('invalid audio url')
     },
 
     hasAnswer(value) {

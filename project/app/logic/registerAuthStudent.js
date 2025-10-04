@@ -1,3 +1,4 @@
+import { data } from '../data/index.js'
 import { validate, SystemError, errors } from 'com'
 
 export const registerAuthStudent = (email) => {
@@ -7,6 +8,7 @@ export const registerAuthStudent = (email) => {
     return fetch(import.meta.env.VITE_API_URL + '/auth-students', {
         method: 'POST',
         headers: {
+            Authorization: 'Bearer ' + data.getToken(),
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({ email })

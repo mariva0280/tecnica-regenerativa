@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { Routes, Route, useNavigate, NavLink, Navigate, Link } from 'react-router'
+import { Routes, Route, useNavigate, NavLink, Navigate } from 'react-router'
 
 import { logic } from '../logic'
 import { useContext } from '../context'
@@ -10,8 +10,9 @@ import { UsersList } from './components/UsersList'
 import { CreateVideo } from './components/CreateVideo'
 import { Videos } from './components/Videos'
 import { AdminVideoList } from './components/AdminVideoList'
+import { Questions } from './components/Questions'
 
-import { canSeeStudentArea, canCreateVideos, canManageUsers, canManageWhiteList, isAdminLike, canAccessPanel } from '../logic/isUserRole'
+import { canSeeStudentArea, canCreateVideos, canManageUsers, canManageWhiteList, canAccessPanel } from '../logic/isUserRole'
 
 export const Home = ({ onUserLoggedOut }) => {
     const navigate = useNavigate()
@@ -54,8 +55,6 @@ export const Home = ({ onUserLoggedOut }) => {
         }
     }
 
-    //const handleCreateAuthStudentClick = () => navigate('/admin-panel')
-
     const handleCreateAuthStudentCancelClicked = () => navigate('/admin-panel')
 
     const handleAuthStudentCreated = () => navigate('/admin-panel')
@@ -63,8 +62,6 @@ export const Home = ({ onUserLoggedOut }) => {
     const handleCreateVideoClick = () => navigate('/admin-panel')
 
     const handleCreateVideoCancelClicked = () => navigate('/admin-panel')
-
-    console.log('Home -> render')
 
     return (
         <div className="p-5 max-w-6xl mx-auto">
@@ -74,14 +71,12 @@ export const Home = ({ onUserLoggedOut }) => {
                 <h1 className="text-xl">Hello, {username}!</h1>
 
                 <button
-                    className="inline-flex items-center rounded-2xl bg-green-400 px-4 py-2 text-white font-medium
-                   hover:bg-green-500 hover:shadow-md transition-all"
+                    className="inline-flex items-center rounded-2xl bg-green-400 px-4 py-2 text-white font-medium hover:bg-green-500 hover:shadow-md transition-all"
                     type="button"
                     onClick={handleLogoutClick}
                 >Logout</button>
             </div>
             <nav className="mt-6 flex gap-6 mb-10">
-
                 {canAccessPanel() && (
                     <NavLink to="/admin-panel" className={({ isActive }) => isActive ? 'text-green-600 underline' : 'text-black/80 hover:text-green-600'}>
                         Panel
@@ -102,35 +97,35 @@ export const Home = ({ onUserLoggedOut }) => {
                         </NavLink>
                     </>
                 )}
-
-              
             </nav>
 
             <Routes>
                 <Route path="/admin-panel" element={canAccessPanel() ? <AdminPanel /> : <Navigate to="/videos" replace />} />
 
-                <Route path="/create-auth-student" element={canManageWhiteList() ? (<CreateAuthStudent
-                    onCancelClicked={handleCreateAuthStudentCancelClicked}
-                    onAuthStudentCreated={handleAuthStudentCreated}
-                />) : <Navigate to="/admin-panel" replace />} />
+                <Route path="/create-auth-student" element={canManageWhiteList() ? (
+                    <CreateAuthStudent
+                        onCancelClicked={handleCreateAuthStudentCancelClicked}
+                        onAuthStudentCreated={handleAuthStudentCreated}
+                    />
+                ) : <Navigate to="/admin-panel" replace />} />
 
-                <Route path="/create-video" element={canCreateVideos() ? (<CreateVideo
-                    onCancelClicked={handleCreateVideoCancelClicked}
-                    onVideoCreated={handleCreateVideoClick}
-                />) : <Navigate to="/admin-panel" replace />} />
+                <Route path="/create-video" element={canCreateVideos() ? (
+                    <CreateVideo
+                        onCancelClicked={handleCreateVideoCancelClicked}
+                        onVideoCreated={handleCreateVideoClick}
+                    />
+                ) : <Navigate to="/admin-panel" replace />} />
 
                 <Route
                     path="/admin-videos"
                     element={canCreateVideos() ? <AdminVideoList /> : <Navigate to="/videos" replace />}
                 />
 
-                <Route path="/users-list" element={canManageUsers() ? <UsersList
-                /> : <Navigate to="/admin-panel" replace />} />
+                <Route path="/users-list" element={canManageUsers() ? <UsersList /> : <Navigate to="/admin-panel" replace />} />
 
                 <Route path="/videos" element={<Videos />} />
-                <Route path="/questions" element={<div className="p-5">Preguntas (pendiente)</div>} />
+                <Route path="/questions" element={<Questions />} />
 
-                {/* Redirección por defecto a /videos si cae en / */}
                 <Route index element={<Navigate to="/videos" />} />
             </Routes>
         </div>

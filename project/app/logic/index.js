@@ -12,6 +12,8 @@ import { getVideos } from './getVideos'
 import { deleteVideo } from './deleteVideo'
 import { createQuestion } from './createQuestion'
 import { getQuestions } from './getQuestions'
+import { uploadAudio } from './uploadAudio'
+
 export const logic = {
     registerUser,
     isUserLoggedIn,
@@ -26,5 +28,6 @@ export const logic = {
     getVideos,
     deleteVideo,
     createQuestion,
-    getQuestions
+    getQuestions,
+    uploadAudio
 }
