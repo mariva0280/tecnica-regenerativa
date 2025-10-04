@@ -34,18 +34,22 @@ export const getQuestions = (role, { zone, search, hasAnswer, page = 1, limit = 
     const hasAnswerFilter = hasAnswer === true 
         ? { 'answers.0': { $exists: true } } 
         : hasAnswer === false 
-            ? { 'answers': { $size: 0 } } 
+            ? { answers: { $size: 0 } } 
             : null
 
-    let query 
+    let query
 
     if (role === 'admin' || role === 'superadmin') {
-        query = { $and: [...baseFilters] }   
+        const adminFilters = [...baseFilters]
+        if (hasAnswerFilter) adminFilters.push(hasAnswerFilter)
+        query = adminFilters.length ? { $and: adminFilters } : {}
     } else {
-        const ownBranch = studentId ? { $and: [{ student: studentId }, ...baseFilters]} : null
+        const ownFilters = [...baseFilters]
+        if (hasAnswerFilter) ownFilters.push(hasAnswerFilter)
+        const ownBranch = studentId ? { $and: [{ student: studentId }, ...ownFilters] } : null
 
-        const othersBranchAnd = [{ isPublished: true },...baseFilters]
-        if (hasAnswerFilter) othersBranchAnd.push(hasAnswerFilter) 
+        const othersBranchAnd = [{ isPublished: true }, ...baseFilters]
+        if (hasAnswerFilter) othersBranchAnd.push(hasAnswerFilter)
         const othersBranch = { $and: othersBranchAnd }
 
         if (ownBranch) {
@@ -54,7 +58,7 @@ export const getQuestions = (role, { zone, search, hasAnswer, page = 1, limit = 
             query = othersBranch
         }
     }
-    
+
     return Question.find(query)
         .sort({ createdAt: -1 })
         .skip((_page - 1) * _limit)

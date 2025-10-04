@@ -9,16 +9,16 @@ import { activateUserByEmail } from './activateUserByEmail.js'
 import { getUserUsername } from './getUserUsername.js'
 import { getAllUsers } from './getAllUsers.js'
 import { createVideo } from './createVideo.js'
-import { getVideos } from './getVideos.js'  
+import { getVideos } from './getVideos.js'
 import { deleteVideo } from './deleteVideo.js'
 import { createQuestion } from './createQuestion.js'
 import { getQuestions } from './getQuestions.js'
-
+import { answerQuestion } from './answerQuestion.js'
 
 export const logic = {
     registerUser,
     authenticateUser,
-    registerAuthStudent, 
+    registerAuthStudent,
     deleteAuthStudent,
     suspendUser,
     suspendUserByEmail,
@@ -30,6 +30,6 @@ export const logic = {
     getVideos,
     deleteVideo,
     createQuestion,
-    getQuestions
-
+    getQuestions,
+    answerQuestion
 }
