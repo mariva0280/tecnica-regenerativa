@@ -7,6 +7,7 @@ import { usersRouter } from './routes/usersRouter.js'
 import { authStudentsRouter } from './routes/authStudentsRouter.js'
 import { videosRouter } from './routes/videosRouter.js'
 import { questionsRouter } from './routes/questionsRouter.js'
+import { uploadAudioRouter} from './routes/uploadAudioRouter.js'
 
 const { MONGO_URL_DEV, PORT } = process.env
 
@@ -24,6 +25,8 @@ connect(MONGO_URL_DEV)
         api.use('/auth-students', authStudentsRouter)
         api.use('/videos', videosRouter)
         api.use('/questions', questionsRouter)
+        api.use('/upload-audio', uploadAudioRouter)
+        api.use('/uploads', express.static('uploads')) // Sirve archivos estáticos
 
         api.use(errorHandler)
 

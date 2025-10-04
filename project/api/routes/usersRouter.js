@@ -54,15 +54,20 @@ usersRouter.get('/self/username', (request, response, next) => {
 
 usersRouter.patch('/:userId/activate', (request, response, next) => {
     try {
+        const authorization = request.headers.authorization
+        if (!authorization) throw new AuthorizationError('missing token')
+
+        const token = authorization.slice(7)
+        const { role } = jwt.verify(token, JWT_SECRET)
+
         const { userId } = request.params
 
-        logic.activateUser(userId)
+        logic.activateUser(userId, role)
             .then(() => response.status(204).send())
             .catch(error => next(error))
     } catch (error) {
-        next(error) 
+        next(error)
     }
-    
 })
 
 usersRouter.patch('/by-email/activate', jsonBodyParser, (request, response, next) => {
@@ -84,13 +89,19 @@ usersRouter.patch('/by-email/activate', jsonBodyParser, (request, response, next
 
 usersRouter.patch('/:userId/suspend', (request, response, next) => {
     try {
+        const authorization = request.headers.authorization
+        if (!authorization) throw new AuthorizationError('missing token')
+
+        const token = authorization.slice(7)
+        const { role } = jwt.verify(token, JWT_SECRET)
+
         const { userId } = request.params
 
-        logic.suspendUser(userId)
-            .then(() => response.status(204).send())    
-            .catch(error => next(error))    
+        logic.suspendUser(userId, role)
+            .then(() => response.status(204).send())
+            .catch(error => next(error))
     } catch (error) {
-        next(error) 
+        next(error)
     }
 })
 
