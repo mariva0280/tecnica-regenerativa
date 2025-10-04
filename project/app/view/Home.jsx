@@ -67,18 +67,24 @@ export const Home = ({ onUserLoggedOut }) => {
         <div className="p-5 max-w-6xl mx-auto">
             <i className="text-2xl font-bold text-green-600">Logo</i>
 
-            <div className="mt-4 flex items-center justify-between">
-                <h1 className="text-xl">Hello, {username}!</h1>
+            <div className="mt-4 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                <h1 className="text-xl text-center sm:text-left">Hola, {username}!</h1>
 
                 <button
-                    className="inline-flex items-center rounded-2xl bg-green-400 px-4 py-2 text-white font-medium hover:bg-green-500 hover:shadow-md transition-all"
+                    className="inline-flex items-center self-center rounded-2xl bg-green-400 px-4 py-2 text-white font-medium hover:bg-green-500 hover:shadow-md transition-all"
                     type="button"
                     onClick={handleLogoutClick}
                 >Logout</button>
             </div>
-            <nav className="mt-6 flex gap-6 mb-10">
+
+            <nav className="mt-6 mb-10 flex flex-wrap items-center justify-center gap-6">
                 {canAccessPanel() && (
-                    <NavLink to="/admin-panel" className={({ isActive }) => isActive ? 'text-green-600 underline' : 'text-black/80 hover:text-green-600'}>
+                    <NavLink
+                        to="/admin-panel"
+                        className={({ isActive }) => isActive
+                            ? 'text-green-600 underline decoration-2 decoration-green-500'
+                            : 'text-black/80 hover:text-green-600'}
+                    >
                         Panel
                     </NavLink>
                 )}
@@ -87,13 +93,19 @@ export const Home = ({ onUserLoggedOut }) => {
                     <>
                         <NavLink
                             to="/videos"
-                            className={({ isActive }) => isActive ? 'text-green-600 underline' : 'text-black/80 hover:text-green-600'}
-                        >Videos
+                            className={({ isActive }) => isActive
+                                ? 'text-green-600 underline decoration-2 decoration-green-500'
+                                : 'text-black/80 hover:text-green-600'}
+                        >
+                            Videos
                         </NavLink>
                         <NavLink
                             to="/questions"
-                            className={({ isActive }) => isActive ? 'text-green-600 underline' : 'text-black/70 hover:text-green-600'}
-                        >Preguntas
+                            className={({ isActive }) => isActive
+                                ? 'text-green-600 underline decoration-2 decoration-green-500'
+                                : 'text-black/70 hover:text-green-600'}
+                        >
+                            Preguntas
                         </NavLink>
                     </>
                 )}
