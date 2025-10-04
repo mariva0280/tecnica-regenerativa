@@ -13,6 +13,7 @@ import { deleteVideo } from './deleteVideo'
 import { createQuestion } from './createQuestion'
 import { getQuestions } from './getQuestions'
 import { uploadAudio } from './uploadAudio'
+import { answerQuestion } from './answerQuestion'
 
 export const logic = {
     registerUser,
@@ -29,5 +30,6 @@ export const logic = {
     deleteVideo,
     createQuestion,
     getQuestions,
-    uploadAudio
+    uploadAudio,
+    answerQuestion
 }

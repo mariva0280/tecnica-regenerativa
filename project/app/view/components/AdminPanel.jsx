@@ -1,5 +1,15 @@
-import { useNavigate } from 'react-router'
-import { canManageWhiteList, canCreateVideos, canManageUsers } from '../../logic/isUserRole'
+﻿import { useNavigate } from 'react-router'
+import { canManageWhiteList, canCreateVideos, canManageUsers, isAdminLike } from '../../logic/isUserRole'
+
+const ActionButton = ({ onClick, children }) => (
+    <button
+        onClick={onClick}
+        className="inline-flex items-center justify-center rounded-2xl px-4 py-3 font-medium bg-green-400 text-white transition-all duration-200 hover:bg-green-600 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-green-400 active:scale-[0.98]"
+        type="button"
+    >
+        {children}
+    </button>
+)
 
 export const AdminPanel = () => {
     const navigate = useNavigate()
@@ -9,41 +19,35 @@ export const AdminPanel = () => {
             <h1 className="text-2xl font-semibold tracking-tight mb-1">Panel de administración</h1>
             <p className="text-sm text-slate-600 mb-5">Acciones rápidas</p>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-3">
+            <div className="grid grid-cols-1 gap-3 sm:grid-cols-2 md:grid-cols-3">
                 {canManageWhiteList() && (
-                    <button
-                        onClick={() => navigate('/create-auth-student')}
-                        className="inline-flex items-center justify-center rounded-2xl px-4 py-3 font-medium bg-green-400 text-white transition-all duration-200 hover:bg-green-600 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-green-400 active:scale-[0.98]"
-                    >
+                    <ActionButton onClick={() => navigate('/create-auth-student')}>
                         Autorizar alumno
-                    </button>
+                    </ActionButton>
                 )}
 
                 {canCreateVideos() && (
-                    <button
-                        onClick={() => navigate('/create-video')}
-                        className="inline-flex items-center justify-center rounded-2xl px-4 py-3 font-medium bg-green-400 text-white transition-all duration-200 hover:bg-green-600 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-green-400 active:scale-[0.98]"
-                    >
+                    <ActionButton onClick={() => navigate('/create-video')}>
                         Añadir vídeo
-                    </button>
+                    </ActionButton>
                 )}
 
                 {canCreateVideos() && (
-                    <button
-                        onClick={() => navigate('/admin-videos')}
-                        className="inline-flex items-center justify-center rounded-2xl px-4 py-3 font-medium bg-green-400 text-white transition-all duration-200 hover:bg-green-600 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-green-400 active:scale-[0.98]"
-                    >
+                    <ActionButton onClick={() => navigate('/admin-videos')}>
                         Listado de vídeos
-                    </button>
+                    </ActionButton>
                 )}
 
                 {canManageUsers() && (
-                    <button
-                        onClick={() => navigate('/users-list')}
-                        className="inline-flex items-center justify-center rounded-2xl px-4 py-3 font-medium bg-green-400 text-white transition-all duration-200 hover:bg-green-600 hover:shadow-lg hover:-translate-y-0.5 focus:outline-none focus:ring-2 focus:ring-green-400 active:scale-[0.98]"
-                    >
+                    <ActionButton onClick={() => navigate('/users-list')}>
                         Listado de usuarios
-                    </button>
+                    </ActionButton>
+                )}
+
+                {isAdminLike() && (
+                    <ActionButton onClick={() => navigate('/admin-questions')}>
+                        Responder preguntas
+                    </ActionButton>
                 )}
             </div>
         </div>

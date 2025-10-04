@@ -74,6 +74,11 @@ export const validate = {
         if (!/^[0-9a-fA-F]{24}$/.test(videoId)) throw new ValidationError('invalid videoId length')
     },
 
+    questionId(questionId) {
+        if (typeof questionId !== 'string') throw new ValidationError('invalid questionId type')
+        if (!/^[0-9a-fA-F]{24}$/.test(questionId)) throw new ValidationError('invalid questionId length')
+    },
+
     page(page) {
         if (page === undefined) return
         if (typeof page === 'string') {
