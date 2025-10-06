@@ -14,7 +14,7 @@ import { logic } from './logic'
 export const App = () => {
     const navigate = useNavigate()
 
-    const [alertMessage, setAlertMessage] = useState('')
+    const [alertState, setAlertState] = useState(null)
     const [confirmMessage, setConfirmMessage] = useState('')
     const [confirmAction, setConfirmAction] = useState(null)
 
@@ -34,13 +34,13 @@ export const App = () => {
         } catch (error) {
             console.error(error)
 
-            alert(error.message)
+            handleShowAlert(error.message)
         }
 
     
 
     
-    const handleAlertAccepted = () => setAlertMessage('')
+    const handleAlertAccepted = () => setAlertState(null)
 
     const handleAcceptConfirm = () => {
         setConfirmMessage('')
@@ -62,13 +62,15 @@ export const App = () => {
         })
     }
 
+    const handleShowAlert = (message, variant = 'error') => setAlertState({ message, variant })
+
     console.log('App -> render')
 
     return <Context.Provider value={{
-        alert: setAlertMessage,
+        alert: handleShowAlert,
         confirm: handleShowConfirm
     }}>
-        {alertMessage && <Alert message={alertMessage} onAccepted={handleAlertAccepted} />}
+        {alertState && <Alert message={alertState.message} variant={alertState.variant} onAccepted={handleAlertAccepted} />}
 
         {confirmMessage && <Confirm message={confirmMessage} onCancelled={handleCancelConfirm} onAccepted={handleAcceptConfirm} />}
 
@@ -105,3 +107,6 @@ export const App = () => {
         </Routes>
     </Context.Provider>
 }
+
+
+

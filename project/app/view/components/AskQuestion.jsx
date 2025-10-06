@@ -55,7 +55,7 @@ export const AskQuestion = ({ onCreated }) => {
         audioPromise
             .then(audioUrl => logic.createQuestion(trimmedZone, trimmedTitle, trimmedBody, audioUrl))
             .then(() => {
-                alert('Pregunta creada correctamente')
+                alert('Pregunta creada correctamente', 'success')
                 resetForm()
                 if (onCreated) onCreated()
             })

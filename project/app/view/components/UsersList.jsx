@@ -61,7 +61,7 @@ export const UsersList = () => {
 
                 const run = (i = 0) => {
                     if (i >= emailsSelected.length) {
-                        alert(`${label} completed`)
+                        alert(`${label} completed`, 'success')
                         setUsers(prev => prev.map(user => {
                             if (emailsSelected.includes(user.email)) {
                                 return { ...user, active: label === 'activate' ? true : false   }

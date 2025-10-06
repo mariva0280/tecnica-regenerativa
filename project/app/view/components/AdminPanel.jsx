@@ -1,4 +1,4 @@
-﻿import { useNavigate } from 'react-router'
+import { useNavigate } from 'react-router'
 import { canManageWhiteList, canCreateVideos, canManageUsers, isAdminLike } from '../../logic/isUserRole'
 
 const ActionButton = ({ onClick, children }) => (
@@ -28,13 +28,13 @@ export const AdminPanel = () => {
 
                 {canCreateVideos() && (
                     <ActionButton onClick={() => navigate('/create-video')}>
-                        Añadir vídeo
+                        Añadir video
                     </ActionButton>
                 )}
 
                 {canCreateVideos() && (
                     <ActionButton onClick={() => navigate('/admin-videos')}>
-                        Listado de vídeos
+                        Listado de videos
                     </ActionButton>
                 )}
 

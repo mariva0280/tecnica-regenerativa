@@ -15,7 +15,7 @@ export const CreateAuthStudent = ({ onCancelClicked, onAuthStudentCreated }) => 
                 .then(() => {
                     form.reset()
 
-                    alert('Authorized student successfully')
+                    alert('Authorized student successfully', 'success')
                     onAuthStudentCreated()
                 })
                 .catch(error => {

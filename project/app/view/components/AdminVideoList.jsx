@@ -24,7 +24,7 @@ export const AdminVideoList = () => {
             .then(videos => setVideos(videos || []))
             .catch(error => {
                 console.error(error)
-                alert.error(error.message)
+                alert(error.message)
             })
             .finally(() => setLoading(false))
     }, [zone, search, page])
@@ -36,12 +36,12 @@ export const AdminVideoList = () => {
                 if (!ok) return
                 return logic.deleteVideo(videoId)
                     .then(() => {
-                        alert('Video deleted successfully')
+                        alert('Video deleted successfully', 'success')
                         setVideos(prev => prev.filter(v => (v._id || v.id) !== videoId))
                     })
                     .catch(error => {
                         console.error(error)
-                        alert.error(error.message)
+                        alert(error.message)
                     })
             })
         }

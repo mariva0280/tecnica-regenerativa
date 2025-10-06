@@ -2,6 +2,16 @@ import { useEffect, useState } from 'react'
 import { logic } from '../../logic'
 import { useContext } from '../../context'
 
+const resolveUrl = rawUrl => {
+    if (!rawUrl) return null
+    if (/^https?:\/\//i.test(rawUrl)) return rawUrl
+
+    const base = import.meta.env.VITE_API_URL?.replace(/\/$/, '')
+    const relative = rawUrl.startsWith('/') ? rawUrl : `/${rawUrl}`
+
+    return base ? `${base}${relative}` : relative
+}
+
 export const QuestionsList = ({ refreshToken = 0 }) => {
     const { alert } = useContext()
 
@@ -29,13 +39,13 @@ export const QuestionsList = ({ refreshToken = 0 }) => {
         return () => { cancelled = true }
     }, [zone, search, page, refreshToken])
 
-    const renderQuestionAudio = (question) => {
+    const renderQuestionAudio = question => {
         const attachments = Array.isArray(question.attachments) ? question.attachments : []
-        const audioAttachment = attachments.find(att => att?.type === 'audio' && att.audio?.url)
-        return audioAttachment?.audio?.url || null
+        const audioAttachment = attachments.find(att => att?.type === 'audio' && (att.audio?.url || att.url))
+        return resolveUrl(audioAttachment?.audio?.url || audioAttachment?.url)
     }
 
-    const renderAnswerAudio = (answer) => answer?.audio?.url || null
+    const renderAnswerAudio = answer => resolveUrl(answer?.audio?.url)
 
     return (
         <div className="p-5 max-w-4xl mx-auto">
@@ -46,16 +56,16 @@ export const QuestionsList = ({ refreshToken = 0 }) => {
                     className="border rounded px-3 py-1"
                     placeholder="Filtrar por zona"
                     value={zone}
-                    onChange={e => { setZone(e.target.value); setPage(1) }}
+                    onChange={event => { setZone(event.target.value); setPage(1) }}
                 />
                 <input
                     className="border rounded px-3 py-1 flex-1"
                     placeholder="Buscar palabra clave..."
                     value={search}
-                    onChange={e => { setSearch(e.target.value); setPage(1) }}
+                    onChange={event => { setSearch(event.target.value); setPage(1) }}
                 />
             </div>
-            {loading && <div>Cargando…</div>}
+            {loading && <div>Cargandoâ€¦</div>}
 
             <div className="space-y-4">
                 {questions.map(question => {
@@ -77,6 +87,7 @@ export const QuestionsList = ({ refreshToken = 0 }) => {
                                     {answers.map((answer, index) => {
                                         const answerAudio = renderAnswerAudio(answer)
                                         const key = answer.id || `${question.id}-answer-${index}`
+
                                         return (
                                             <div key={key} className="ml-2 text-sm">
                                                 {answer.text ? (
@@ -96,7 +107,7 @@ export const QuestionsList = ({ refreshToken = 0 }) => {
                     )
                 })}
                 {questions.length === 0 && !loading && (
-                    <div className="text-gray-500">No hay preguntas aún</div>
+                    <div className="text-gray-500">No hay preguntas aÃºn</div>
                 )}
             </div>
 
@@ -104,15 +115,15 @@ export const QuestionsList = ({ refreshToken = 0 }) => {
                 <div className="mt-4 flex items-center gap-2">
                     <button
                         className="border rounded px-3 py-1"
-                        onClick={() => setPage(p => Math.max(1, p - 1))}
+                        onClick={() => setPage(previous => Math.max(1, previous - 1))}
                         disabled={page === 1}
                     >
                         Anterior
                     </button>
-                    <span>Página {page}</span>
+                    <span>PÃ¡gina {page}</span>
                     <button
                         className="border rounded px-3 py-1"
-                        onClick={() => setPage(p => p + 1)}
+                        onClick={() => setPage(previous => previous + 1)}
                     >
                         Siguiente
                     </button>

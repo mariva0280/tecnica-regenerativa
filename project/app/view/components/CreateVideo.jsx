@@ -20,7 +20,7 @@ export const CreateVideo = ({ onCancelClicked, onVideoCreated }) => {
                 .then(() => {
                     form.reset()
 
-                    alert('Video created')
+                    alert('Video created', 'success')
                     onVideoCreated()
                 })
                 .catch(error => {
