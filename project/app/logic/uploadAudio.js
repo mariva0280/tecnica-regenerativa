@@ -1,3 +1,4 @@
+import { API_BASE } from './apiBase'
 import { data } from '../data'
 import { validate, SystemError, errors } from 'com'
 
@@ -5,7 +6,7 @@ export const uploadAudio = (audioFile) => {
     const formData = new FormData()
     formData.append('audio', audioFile)
 
-    return fetch(import.meta.env.VITE_API_URL + '/upload-audio', {
+    return fetch(API_BASE + '/upload-audio', {
         method: 'POST',
         headers: {
             Authorization: 'Bearer ' + data.getToken(),

@@ -1,3 +1,4 @@
+import { API_BASE } from './apiBase'
 import { data } from '../data'
 import { validate, SystemError, errors } from 'com'
 
@@ -19,7 +20,7 @@ export const answerQuestion = (questionId, text, audioUrl) => {
     if (trimmedText) payload.text = trimmedText
     if (trimmedAudio) payload.audioUrl = trimmedAudio
 
-    return fetch(`${import.meta.env.VITE_API_URL}/questions/${questionId}/answers`, {
+    return fetch(`${API_BASE}/questions/${questionId}/answers`, {
         method: 'POST',
         headers: {
             Authorization: 'Bearer ' + data.getToken(),

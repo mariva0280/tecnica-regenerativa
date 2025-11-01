@@ -18,7 +18,7 @@ connect(MONGO_URL_DEV)
         api.use(cors())
 
         api.get('/hello', (request, response) => {
-            response.send('Hello! 👋')
+            response.send('Hello! :)')
         })
 
         api.use('/users', usersRouter)

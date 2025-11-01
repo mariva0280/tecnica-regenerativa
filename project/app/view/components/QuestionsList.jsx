@@ -6,7 +6,7 @@ const resolveUrl = rawUrl => {
     if (!rawUrl) return null
     if (/^https?:\/\//i.test(rawUrl)) return rawUrl
 
-    const base = import.meta.env.VITE_API_URL?.replace(/\/$/, '')
+    const base = (import.meta?.env?.VITE_API_URL || `${window.location.protocol}//${window.location.hostname}:8080`).replace(/\/$/, '')
     const relative = rawUrl.startsWith('/') ? rawUrl : `/${rawUrl}`
 
     return base ? `${base}${relative}` : relative
@@ -169,3 +169,4 @@ export const QuestionsList = ({ refreshToken = 0 }) => {
         </div>
     )
 }
+

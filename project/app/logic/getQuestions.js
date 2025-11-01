@@ -1,3 +1,4 @@
+import { API_BASE } from './apiBase'
 import { data } from '../data'
 import { validate, SystemError, errors } from 'com' 
 
@@ -19,7 +20,7 @@ export const getQuestions = ({ zone, search, page, limit, hasAnswer } = {}) => {
     if (limit !== undefined) params.set('limit', String(limit))
     if (hasAnswer !== undefined) params.set('hasAnswer', String(hasAnswer))
 
-    const url = `${import.meta.env.VITE_API_URL}/questions${params.toString() ? `?${params}` : ''}`    
+    const url = `${API_BASE}/questions${params.toString() ? `?${params}` : ''}`    
 
     return fetch(url, {
         method: 'GET', 

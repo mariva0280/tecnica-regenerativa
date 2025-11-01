@@ -22,19 +22,26 @@ const storage = multer.diskStorage({
     }
 })
 
-// Aceptamos formatos de audio comunes
-const allowed = new Set([
+// Aceptamos formatos de audio comunes (por MIME) y validamos por extensión
+const allowedMime = new Set([
     'audio/mpeg',     // .mp3
     'audio/wav',      // .wav
     'audio/ogg',      // .ogg
     'audio/webm',     // .webm
     'audio/x-m4a',    // .m4a
     'audio/mp4',      // .mp4 (contenedor)
-    'audio/aac'       // .aac
+    'audio/aac',      // .aac
+    'audio/opus',     // .opus (telegram, etc.)
+    'application/ogg' // algunos .oga/.ogg
 ])
 
+const allowedExt = new Set(['.mp3', '.wav', '.ogg', '.oga', '.webm', '.m4a', '.mp4', '.aac', '.opus'])
+
 const fileFilter = (request, file, cb) => {
-    if (allowed.has(file.mimetype)) cb(null, true)
+    const mimetypeOk = allowedMime.has(file.mimetype)
+    const ext = (path.extname(file.originalname) || '').toLowerCase()
+    const extOk = allowedExt.has(ext)
+    if (mimetypeOk || extOk) cb(null, true)
     else cb(new Error('Unsupported audio type'), false)
 }
 
