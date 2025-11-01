@@ -4,7 +4,7 @@ import { validate, SystemError, NotFoundError, ValidationError } from 'com'
 import { assertRole } from './helper/authorize.js'
 
 export const answerQuestion = (role, questionId, authorId, text, audioUrl) => {
-    assertRole(role, ['admin', 'superadmin'])
+    assertRole(role, ['admin', 'superadmin', 'curator'])
 
     validate.questionId(questionId)
     validate.userId(authorId)
