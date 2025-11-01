@@ -1,0 +1,1 @@
+curl -X GET -H 'Content-Type: application/json' -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI2OGE4M2FmZTU5YWUyZmY0NjQ0Nzc2ZWEiLCJyb2xlIjoiYWRtaW4iLCJpYXQiOjE3NTYxMzQzNTR9.SFJvyCVBCjWd9JMX1H_tMDYkREB58CqNO0huEjlmmFw' http://localhost:8080/questions -v

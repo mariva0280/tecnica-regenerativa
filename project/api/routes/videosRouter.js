@@ -1,0 +1,61 @@
+import { Router } from 'express'
+import { jsonBodyParser } from '../middlewares/jsonBodyParser.js'
+import { logic } from '../logic/index.js'
+import jwt from 'jsonwebtoken'
+import { AuthorizationError } from 'com'
+
+const { JWT_SECRET } = process.env
+
+export const videosRouter = Router()
+
+videosRouter.post('/', jsonBodyParser, (request, response, next) => {
+    try{
+        const authorization = request.headers.authorization
+        if (!authorization) throw new AuthorizationError('missing token')
+        
+        const token = authorization.slice(7)
+        const { role } = jwt.verify(token, JWT_SECRET)
+        
+        
+
+        const { title, description, zone, vimeoId, vimeoHash, isPublished } = request.body
+        const published = (isPublished === true || isPublished === 'true')
+
+        logic.createVideo(title, description, zone, vimeoId, vimeoHash, published, role)
+            .then(() => response.status(201).send())
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})
+
+videosRouter.get('/', (request, response, next) => {
+    try{
+        const { zone, search, page, limit, onlyPublished } = request.query
+
+        logic.getVideos(zone, search, page, limit, onlyPublished)
+            .then(videos => response.status(200).json(videos))
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})
+
+videosRouter.delete('/:id', (request, response, next) => {
+    try{
+        const authorization = request.headers.authorization
+        if (!authorization) throw new AuthorizationError('missing token')
+        
+        const token = authorization.slice(7)
+        const { role } = jwt.verify(token, JWT_SECRET)
+
+
+        const { id } = request.params    
+
+        logic.deleteVideo(id, role)
+            .then(() => response.status(204).send())
+            .catch(error => next(error))
+    } catch (error) {
+        next(error)
+    }
+})  
