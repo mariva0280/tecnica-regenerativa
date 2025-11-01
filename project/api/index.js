@@ -9,13 +9,17 @@ import { videosRouter } from './routes/videosRouter.js'
 import { questionsRouter } from './routes/questionsRouter.js'
 import { uploadAudioRouter} from './routes/uploadAudioRouter.js'
 
-const { MONGO_URL_DEV, PORT } = process.env
+const { MONGO_URL_DEV, PORT, NODE_ENV, FRONT_ORIGIN } = process.env
 
 connect(MONGO_URL_DEV)
     .then(() => {
         const api = express()
 
-        api.use(cors())
+        if (NODE_ENV === 'production' && FRONT_ORIGIN) {
+            api.use(cors({ origin: FRONT_ORIGIN }))
+        } else {
+            api.use(cors())
+        }
 
         api.get('/hello', (request, response) => {
             response.send('Hello! :)')

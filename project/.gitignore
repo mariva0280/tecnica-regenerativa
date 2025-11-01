@@ -27,3 +27,4 @@ coverage/
 dump/
 tmp/
 *.pid
+api/uploads/

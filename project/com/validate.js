@@ -21,8 +21,17 @@ export const validate = {
 
     password(password) {
         if (typeof password !== 'string') throw new ValidationError('invalid password type')
-        if (password.length < 8) throw new ValidationError('invalid password min length')
-        if (password.length > 20) throw new ValidationError('invalid password max length')
+        const length = password.length
+        if (length < 10) throw new ValidationError('invalid password min length')
+        if (length > 64) throw new ValidationError('invalid password max length')
+
+        // Requiere al menos 3 de 4 categorías: minúscula, mayúscula, dígito, símbolo
+        let categories = 0
+        if (/[a-z]/.test(password)) categories++
+        if (/[A-Z]/.test(password)) categories++
+        if (/[0-9]/.test(password)) categories++
+        if (/[^A-Za-z0-9]/.test(password)) categories++
+        if (categories < 3) throw new ValidationError('invalid password complexity')
     },
 
     userId(userId) {

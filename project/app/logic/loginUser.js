@@ -1,9 +1,10 @@
 import { data } from '../data'
-import { validate, SystemError, errors } from 'com'
+import { validate, SystemError, errors, ValidationError } from 'com'
 
 export const loginUser = (username, password) => {
     validate.username(username)
-    validate.password(password)
+    if (typeof password !== 'string' || !password.length)
+        throw new ValidationError('invalid password')
 
     return fetch(import.meta.env.VITE_API_URL + '/users/auth', {
         method: 'POST',

@@ -26,7 +26,7 @@ usersRouter.post('/auth', jsonBodyParser, (request, response, next) => {
 
         logic.authenticateUser(username, password)
             .then(user => {
-                const token = jwt.sign({ sub: user.id, role: user.role}, JWT_SECRET)
+                const token = jwt.sign({ sub: user.id, role: user.role }, JWT_SECRET, { expiresIn: '7d' })
 
                 response.status(200).json(token)
             })

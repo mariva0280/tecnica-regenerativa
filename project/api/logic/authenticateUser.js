@@ -5,7 +5,9 @@ import { validate, SystemError, CredentialsError, NotFoundError, AuthorizationEr
 
 export const authenticateUser = (username, password) => {
     validate.username(username)
-    validate.password(password)
+    if (typeof password !== 'string' || password.length === 0) {
+        throw new CredentialsError('wrong password')
+    }
 
     return User.findOne({ username })
         .catch(error => { throw new SystemError('mongo error') })
