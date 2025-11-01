@@ -17,6 +17,18 @@ export const AdminQuestionsMigration = () => {
     const questionAudioInputRef = useRef(null)
     const answerAudioInputRef = useRef(null)
 
+    const MAX_SIZE_BYTES = 20 * 1024 * 1024 // 20MB (igual que backend)
+    const ALLOWED_EXT = ['.mp3', '.wav', '.ogg', '.oga', '.webm', '.m4a', '.mp4', '.aac', '.opus']
+    const validateFile = (file) => {
+        if (!file) return { ok: true }
+        const name = file.name || ''
+        const lower = name.toLowerCase()
+        const ext = ALLOWED_EXT.find(e => lower.endsWith(e))
+        if (!ext) return { ok: false, message: 'Formato no soportado. Usa mp3, wav, ogg, webm, m4a, mp4, aac u opus.' }
+        if (file.size > MAX_SIZE_BYTES) return { ok: false, message: 'El archivo supera 20MB. Selecciona uno más pequeño.' }
+        return { ok: true }
+    }
+
     const resetForm = () => {
         setZone('')
         setTitle('')
@@ -109,7 +121,17 @@ export const AdminQuestionsMigration = () => {
                         type="file"
                         accept="audio/*"
                         className="hidden"
-                        onChange={event => setQuestionAudioFile(event.target.files?.[0] || null)}
+                        onChange={event => {
+                            const file = event.target.files?.[0] || null
+                            const result = validateFile(file)
+                            if (!result.ok) {
+                                alert(result.message)
+                                if (questionAudioInputRef.current) questionAudioInputRef.current.value = ''
+                                setQuestionAudioFile(null)
+                            } else {
+                                setQuestionAudioFile(file)
+                            }
+                        }}
                     />
                 </div>
 
@@ -140,7 +162,17 @@ export const AdminQuestionsMigration = () => {
                         type="file"
                         accept="audio/*"
                         className="hidden"
-                        onChange={event => setAnswerAudioFile(event.target.files?.[0] || null)}
+                        onChange={event => {
+                            const file = event.target.files?.[0] || null
+                            const result = validateFile(file)
+                            if (!result.ok) {
+                                alert(result.message)
+                                if (answerAudioInputRef.current) answerAudioInputRef.current.value = ''
+                                setAnswerAudioFile(null)
+                            } else {
+                                setAnswerAudioFile(file)
+                            }
+                        }}
                     />
                 </div>
 

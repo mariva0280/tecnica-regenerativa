@@ -12,6 +12,7 @@ import { Videos } from './components/Videos'
 import { AdminVideoList } from './components/AdminVideoList'
 import { Questions } from './components/Questions'
 import { AdminQuestions } from './components/AdminQuestions'
+import { ErrorBoundary } from './components/ErrorBoundary'
 import { AdminQuestionsMigration } from './components/AdminQuestionsMigration'
 
 import { canSeeStudentArea, canCreateVideos, canManageUsers, canManageWhiteList, canAccessPanel, isAdminLike, canMigrateQuestions } from '../logic/isUserRole'
@@ -139,7 +140,7 @@ export const Home = ({ onUserLoggedOut }) => {
 
                 <Route path="/videos" element={<Videos />} />
                 <Route path="/questions" element={<Questions />} />
-                <Route path="/admin-questions" element={isAdminLike() ? <AdminQuestions /> : <Navigate to="/videos" replace />} />
+                <Route path="/admin-questions" element={isAdminLike() ? <ErrorBoundary><AdminQuestions /></ErrorBoundary> : <Navigate to="/videos" replace />} />
                 <Route path="/admin-questions-migrate" element={canMigrateQuestions() ? <AdminQuestionsMigration /> : <Navigate to="/videos" replace />} />
 
                 <Route index element={<Navigate to="/videos" />} />
@@ -147,3 +148,5 @@ export const Home = ({ onUserLoggedOut }) => {
         </div>
     )
 }
+
+

@@ -32,7 +32,9 @@ export const QuestionsList = ({ refreshToken = 0 }) => {
         let cancelled = false
         setLoading(true)
 
-        logic.getQuestions({ zone, search, page, limit: 10 })
+        const hasAnswer = statusFilter === 'answered' ? true : statusFilter === 'pending' ? false : undefined
+
+        logic.getQuestions({ zone, search, page, limit: 10, hasAnswer })
             .then(result => {
                 if (!cancelled) setQuestions(result || [])
             })
@@ -44,7 +46,7 @@ export const QuestionsList = ({ refreshToken = 0 }) => {
             })
 
         return () => { cancelled = true }
-    }, [zone, search, page, refreshToken])
+    }, [zone, search, page, refreshToken, statusFilter])
 
     const renderQuestionAudio = question => {
         const attachments = Array.isArray(question.attachments) ? question.attachments : []
@@ -54,11 +56,8 @@ export const QuestionsList = ({ refreshToken = 0 }) => {
 
     const renderAnswerAudio = answer => resolveUrl(answer?.audio?.url)
 
-    const filteredQuestions = questions.filter(question => {
-        if (statusFilter === 'all') return true
-        const hasAnswers = Array.isArray(question.answers) && question.answers.length > 0
-        return statusFilter === 'answered' ? hasAnswers : !hasAnswers
-    })
+    // Con hasAnswer aplicado en el servidor, mantenemos el array tal cual.
+    const filteredQuestions = questions
 
     return (
         <div className="p-5 max-w-4xl mx-auto">
